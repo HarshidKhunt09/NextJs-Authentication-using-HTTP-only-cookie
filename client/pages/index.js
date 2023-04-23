@@ -1,9 +1,19 @@
 import { parseCookies } from 'nookies';
 import Cookies from 'js-cookie';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const Index = ({ token }) => {
   const tokenFromCookie = Cookies.get();
+
+  useEffect(() => {
+    const getCsrfToken = async () => {
+      const { data } = await axios.get('/api/csrf-token');
+      console.log('CSRF', data);
+    };
+    getCsrfToken();
+  }, []);
 
   console.log(tokenFromCookie);
   console.log('token', token);
