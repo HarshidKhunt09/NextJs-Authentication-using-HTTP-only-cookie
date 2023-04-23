@@ -4,16 +4,18 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-const Index = ({ token }) => {
+const Index = ({ token, csrf }) => {
   const tokenFromCookie = Cookies.get();
 
-  useEffect(() => {
-    const getCsrfToken = async () => {
-      const { data } = await axios.get('/api/csrf-token');
-      console.log('CSRF', data);
-    };
-    getCsrfToken();
-  }, []);
+  // useEffect(() => {
+  //   const getCsrfToken = async () => {
+  //     const { data } = await axios.get('/api/csrf-token');
+  //     console.log('CSRF', data);
+  //   };
+  //   getCsrfToken();
+  // }, []);
+
+  console.log(csrf);
 
   console.log(tokenFromCookie);
   console.log('token', token);
@@ -50,12 +52,16 @@ export async function getServerSideProps(context) {
   //   `,
   // });
 
+  const response = await fetch('http://localhost:3000/api/csrf-token');
+  const csrf = await response.json();
+
   console.log(token);
   console.log('tokenOtherWay', tokenOtherWay);
 
   return {
     props: {
       token,
+      csrf,
     },
   };
 }
