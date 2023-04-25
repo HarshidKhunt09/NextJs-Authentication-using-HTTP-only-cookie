@@ -1,6 +1,6 @@
 # NextJs-Authentication-using-HTTP-only-cookie
 
-Start project
+Start project :-
 
 cd client
 npm i
@@ -8,12 +8,11 @@ npm i
 cd server
 npm i
 
-Add env's 
+Create .env file at server folder and add env's values
+Create .env.local file at client folder and add env's values
 
 client side
 npm run dev
 
 server side
 npm start
-
-user => Protected route

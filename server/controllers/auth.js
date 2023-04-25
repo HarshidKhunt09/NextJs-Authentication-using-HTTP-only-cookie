@@ -52,6 +52,7 @@ export const login = async (req, res) => {
     // send token in cookie
     res.cookie('token', token, {
       httpOnly: true,
+      sameSite: 'strict',
       // secure: true, // only works on https
     });
     // send user as json response
@@ -75,7 +76,7 @@ export const currentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password').exec();
     console.log('CURRENT_USER', user);
-    console.log('Cookies token', req.cookies.token);
+    console.log('COOKIES_BE', req.cookies.token);
     return res.json({ ok: true });
   } catch (err) {
     console.log(err);

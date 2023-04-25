@@ -24,11 +24,6 @@ const userSchema = new Schema(
       type: String,
       default: '/avatar.png',
     },
-    role: {
-      type: [String],
-      default: ['Subscriber'],
-      enum: ['Subscriber', 'Instructor', 'Admin'],
-    },
   },
   { timestamps: true }
 );

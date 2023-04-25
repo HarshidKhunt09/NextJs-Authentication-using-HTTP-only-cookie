@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 const Index = ({ token, csrf }) => {
   const tokenFromCookie = Cookies.get();
 
+  // if any situation to fetch csrf on FE side
   // useEffect(() => {
   //   const getCsrfToken = async () => {
   //     const { data } = await axios.get('/api/csrf-token');
@@ -17,8 +18,10 @@ const Index = ({ token, csrf }) => {
 
   console.log(csrf);
 
-  console.log(tokenFromCookie);
-  console.log('token', token);
+  // not getting token because http only cookie not accessible on client. only get csrf token which is not http only
+  console.log('getTokenFromFE', tokenFromCookie);
+  console.log('tokenFromProps', token);
+
   return (
     <>
       <h1 className='jumbotron text-center bg-primary square'>
@@ -36,6 +39,7 @@ export async function getServerSideProps(context) {
   const req = context.req;
   const tokenOtherWay = req.cookies.token || null;
 
+  // we need to pass token in headers. because cookie not accessible on server side.
   const client = new ApolloClient({
     uri: 'http://example.com/graphql',
     cache: new InMemoryCache(),
@@ -55,8 +59,8 @@ export async function getServerSideProps(context) {
   const response = await fetch('http://localhost:3000/api/csrf-token');
   const csrf = await response.json();
 
-  console.log(token);
-  console.log('tokenOtherWay', tokenOtherWay);
+  console.log('getTokenUsingLibrary', token);
+  console.log('getTokenWithoutLibrary', tokenOtherWay);
 
   return {
     props: {
